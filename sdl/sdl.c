@@ -86,14 +86,14 @@ METHOD SDL_getVideoSurface(Ctx* ctx,knh_sfp_t *sfp)
 
 /* VideoInfo SDL.getVideoInfo() */
 // TODO
-METHOD SDL_getVideoInfo(Ctx* ctx,knh_sfp_t *sfp)
+/*METHOD SDL_getVideoInfo(Ctx* ctx,knh_sfp_t *sfp)
 {
   SDL_VideoInfo* ret;
   ret = SDL_GetVideoInfo();
 
   KNH_RETURN(ctx,sfp,ret);
 }
-
+*/
 
 /* void SDL.videoDriveName(String namebuf, int maxlen) */
 
@@ -147,6 +147,7 @@ METHOD SDL_videoModeOK(Ctx* ctx,knh_sfp_t *sfp)
 METHOD SDL_setVideoMode(Ctx* ctx, knh_sfp_t *sfp)
 {
   SDL_Surface *ret;
+  knh_Glue_t *glue = sfp[0].glue;
   int i1 = p_int(sfp[1]);
   int i2 = p_int(sfp[2]);
   int i3 = p_int(sfp[3]);
@@ -157,14 +158,15 @@ METHOD SDL_setVideoMode(Ctx* ctx, knh_sfp_t *sfp)
     SDL_Quit();
   }
 
-  KNH_RETURN(ctx, sfp, ret);
+  glue->ptr = (void*)ret;
+  KNH_RETURN(ctx, sfp, sfp[0].o);
 }
 
 /* void Surface.updateRect(self, int x, int y, int w, int h) */
 
 METHOD Surface_updateRect(Ctx* ctx, knh_sfp_t *sfp)
 {
-  SDL_Surface *self = (SDL_Surface*)((sfp[0].glue)->ptr);
+  SDL_Surface *self = ((sfp[0].glue)->ptr);
   int i1 = p_int(sfp[1]);
   int i2 = p_int(sfp[2]);
   int i3 = p_int(sfp[3]);
@@ -186,8 +188,8 @@ METHOD SDL_updateRects(Ctx* ctx, knh_sfp_t *sfp)
  
 METHOD Surface_flip(Ctx* ctx, knh_sfp_t *sfp)
 {
-  SDL_Surface *self = (SDL_Surface*)((sfp[0].glue)->ptr);
-  if(SDL_Flip(self)==-1){
+  SDL_Surface *self = ((sfp[0].glue)->ptr);
+  if( SDL_Flip(self) ==-1){
     fprintf(stderr,"flip error %s\n",SDL_GetError());
   }
 
@@ -318,14 +320,13 @@ METHOD Surface_unLockSurface(Ctx* ctx, knh_sfp_t *sfp)
 METHOD SDL_loadBMP(Ctx* ctx, knh_sfp_t *sfp)
 {
   char* s1 = p_char(sfp[1]);
-  SDL_Surface *image;
-  image = SDL_LoadBMP(s1);
+  SDL_Surface *image = SDL_LoadBMP(s1);
   if(image == NULL){
     fprintf(stderr,"%s\n",SDL_GetError());
     SDL_Quit();
   }
 
-  KNH_RETURN(ctx,sfp,image);
+  KNH_RETURN(ctx,sfp,new_Glue(ctx, "sdl.Surface",image,NULL));
 }
 
 
@@ -400,11 +401,13 @@ METHOD SDL_convertSurface(Ctx* ctx, knh_sfp_t *sfp)
  
 METHOD Surface_blitSurface(Ctx* ctx,knh_sfp_t *sfp)
 {
-  SDL_Surface *self = ((sfp[0].glue)->ptr);
-  SDL_Surface *image = ((sfp[1].glue)->ptr);
-  if((SDL_BlitSurface(image,NULL,self,NULL))!=0){
+
+  SDL_Surface *s = (SDL_Surface*)((sfp[1].glue)->ptr);
+  SDL_Surface *i = (SDL_Surface*)((sfp[0].glue)->ptr);
+  if(SDL_BlitSurface(i,NULL,s,NULL) != 0){
     fprintf(stderr,"%s\n",SDL_GetError());
   }
+
   KNH_RETURN_void(ctx,sfp);
 }
 /*
@@ -953,6 +956,12 @@ METHOD SDL_getTicks(Ctx* ctx, knh_sfp_t *sfp)
    KNH_RETURN_Float(ctx,sfp,SDL_GetTicks());
 }
 
+METHOD SDL_sample(Ctx* ctx, knh_sfp_t *sfp)
+{
+  //  SDL_Flip(s);
+  KNH_RETURN_void(ctx,sfp);
+}
+
 /*
 METHOD SDL_imgLoad(Ctx* ctx, knh_sfp_t *sfp)
 {
@@ -989,20 +998,6 @@ METHOD SDL_imgLoadRW(Ctx* ctx, knh_sfp_t *sfp)
   KNH_RETURN_void(ctx,sfp);
   }
 */
-/*METHOD Sdl_screen(){
-  while(!done&&SDL_WaitEvent(&event)){
-    switch(event.type){
-    case SDL_MOUSEBUTTONDOWN:
-    break;
-    case SDL_QUIT:
-      done=1;
-      break;
-    case SDL_VIDEOEXPOSE:
-      DrawBackground(screen);
-      break;
-    default:
-      break;
-  }*/
 
 
 /* ConstData */
