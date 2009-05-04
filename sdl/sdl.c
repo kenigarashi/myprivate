@@ -1,5 +1,9 @@
 #include<konoha.h>
+#ifdef KONOHA_OS__MACOSX
+#include <SDL.h>
+#else
 #include<SDL/SDL.h>
+#endif
 //#include<SDL/SDL_image.h>
 
 /* General */
@@ -62,6 +66,7 @@ METHOD SDL_wasInit(Ctx* ctx,knh_sfp_t* sfp)
 }
 
 /* void SDL.getError */
+
 METHOD SDL_getError(Ctx* ctx,knh_sfp_t* sfp)
 {
   printf("%s\n",SDL_GetError());
@@ -79,21 +84,19 @@ METHOD SDL_getVideoSurface(Ctx* ctx,knh_sfp_t *sfp)
   SDL_Surface* ret;
   ret = SDL_GetVideoSurface();
 
-  KNH_RETURN(ctx,sfp,ret);
+  KNH_RETURN(ctx,sfp,new_Glue(ctx,"sdl.Surface",ret,NULL));
 }
-
-
 
 /* VideoInfo SDL.getVideoInfo() */
-// TODO
-/*METHOD SDL_getVideoInfo(Ctx* ctx,knh_sfp_t *sfp)
+
+METHOD SDL_getVideoInfo(Ctx* ctx,knh_sfp_t *sfp)
 {
-  SDL_VideoInfo* ret;
+  SDL_VideoInfo *ret;
   ret = SDL_GetVideoInfo();
 
-  KNH_RETURN(ctx,sfp,ret);
+  KNH_RETURN(ctx,sfp,new_Glue(ctx,"sdl.Surface",ret,NULL));
 }
-*/
+
 
 /* void SDL.videoDriveName(String namebuf, int maxlen) */
 
@@ -124,6 +127,8 @@ METHOD SDL_listModes(Ctx* ctx,knh_sfp_t *sfp)
 }
 */
 
+
+
 /* void SDL.videoModeOK(int width, int height, int bpp, int flags) */
 
 METHOD SDL_videoModeOK(Ctx* ctx,knh_sfp_t *sfp)
@@ -147,7 +152,6 @@ METHOD SDL_videoModeOK(Ctx* ctx,knh_sfp_t *sfp)
 METHOD SDL_setVideoMode(Ctx* ctx, knh_sfp_t *sfp)
 {
   SDL_Surface *ret;
-  knh_Glue_t *glue = sfp[0].glue;
   int i1 = p_int(sfp[1]);
   int i2 = p_int(sfp[2]);
   int i3 = p_int(sfp[3]);
@@ -158,8 +162,7 @@ METHOD SDL_setVideoMode(Ctx* ctx, knh_sfp_t *sfp)
     SDL_Quit();
   }
 
-  glue->ptr = (void*)ret;
-  KNH_RETURN(ctx, sfp, sfp[0].o);
+  KNH_RETURN(ctx, sfp, new_Glue(ctx, "sdl.Surface", ret, NULL));
 }
 
 /* void Surface.updateRect(self, int x, int y, int w, int h) */

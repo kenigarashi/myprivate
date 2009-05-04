@@ -4,7 +4,7 @@ CC = gcc
 CFLAGS = -O2 -Wall -fmessage-length=0 -fpic
 LDLIBS = -lSDL -lkonoha
 
-library = sdl.so
+library = sdl_linux_32.so
 #library = math.dylib
 
 .PHONY: all
@@ -24,6 +24,6 @@ clean:
 
 .PHONY: konoha_install
 konoha_install: $(library)
-	mkdir -p .konoha/sdl/linux_32
-	cp $(library) .konoha/sdl/linux_32
-	cp sdl.k .konoha/sdl/linux_32
+	mkdir -p .konoha/sdl
+	cp $(library) .konoha/sdl
+	cp sdl.k .konoha/sdl

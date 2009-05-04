@@ -13,6 +13,12 @@ class AudioSpec;
 class AudioCVT;
 class CD;
 
+
+
+void SDL.sample()
+
+
+
 //	General
 void SDL.init(int flags);
 void SDL.initSubSystem(int flags);
@@ -33,7 +39,9 @@ void SDL.videoModeOK(int width, int height, int bpp, int flags);
 Surface SDL.setVideoMode(int width, int height, int bpp, int flags);
 
 
+//void Surface.updateRect(int x, int y, int w, int h);
 void Surface.updateRect(int x, int y, int w, int h);
+
 //void SDL.updateRects(Surface screen, int numrects, Rect rects);
 void Surface.flip();
 
@@ -63,7 +71,7 @@ void Surface.setAlpha(int flag, int alpha);
 //void SDL.getCliprect(Surface surface, Rect rect);
 //Surface SDL.converSurface(Surface s, PixelFormat f, int flags);
 
-void Surface.blitSurface(Surface image);
+void Surface.blitSurface(Surface s);
 
 //void Surface.fillRect(Rect dstrect, int color);
 
