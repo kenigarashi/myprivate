@@ -30,7 +30,7 @@ void SDL.getError();
 //	Video
 Surface SDL.getVideoSurface();
 VideoInfo SDL.getVideoInfo();
-void SDL.videoDriverName(String namebuf, int maxlen);
+String SDL.videoDriverName(String namebuf, int maxlen);
 
 // TODO
 //Rect[] SDL.listModes(PixelFormat fmt, int flags);

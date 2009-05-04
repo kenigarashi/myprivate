@@ -107,9 +107,10 @@ METHOD SDL_videoDrivername(Ctx* ctx,knh_sfp_t *sfp)
   ret = SDL_VideoDriverName(s1,i1);
   if(ret == NULL){
     printf("Video is initialized\n");
+    KNH_RETURN_void(ctx,sfp);
   }
 
-  KNH_RETURN_void(ctx,sfp);
+  KNH_RETURN(ctx,sfp,ret);
 }
 
 /*
