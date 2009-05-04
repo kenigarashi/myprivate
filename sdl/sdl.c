@@ -74,7 +74,6 @@ METHOD SDL_getError(Ctx* ctx,knh_sfp_t* sfp)
   KNH_RETURN_void(ctx,sfp);
 }
 
-
 /* Video */
 
 /* Surface SDL.getVideoSurface() */
