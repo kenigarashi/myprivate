@@ -99,7 +99,7 @@ METHOD SDL_getVideoInfo(Ctx* ctx,knh_sfp_t *sfp)
 
 /* void SDL.videoDriveName(String namebuf, int maxlen) */
 
-METHOD SDL_videoDrivername(Ctx* ctx,knh_sfp_t *sfp)
+METHOD SDL_videoDriverName(Ctx* ctx,knh_sfp_t *sfp)
 {
   char* ret;
   char* s1 = p_char(sfp[1]);
@@ -272,26 +272,56 @@ METHOD SDL_getRGBA(Ctx* ctx, knh_sfp_t *sfp)
   KNH_RETURN_void(ctx,sfp);
 }
  */
-  /*
+
+  /*  Surface SDL.createRGBSurface(int flags, int w, int h, int d, int rmask, int gmask, int bmask, int amask) */
+
 METHOD SDL_createRGBsurface(Ctx* ctx, knh_sfp_t *sfp)
 {
-  SDL_Surface* surface;
-  surface = SDL_CreateRGBSurface(sfp[1].ivalue,sfp[2].ivalue,sfp[3].ivalue,sfp[4].ivalue,sfp[5].ivalue,sfp[6].ivalue,sfp[7].ivalue,sfp[8].ivalue);
-  if(surface == NULL){
-    fprintf(stderr,"%s\n",SDL_GetError);
+  SDL_Surface* ret;
+  int i1 = p_int(sfp[1]);
+  int i2 = p_int(sfp[2]);
+  int i3 = p_int(sfp[3]);
+  int i4 = p_int(sfp[4]);
+  int i5 = p_int(sfp[5]);
+  int i6 = p_int(sfp[6]);
+  int i7 = p_int(sfp[7]);
+  int i8 = p_int(sfp[8]);
+  ret = SDL_CreateRGBSurface(i1, i2, i3, i4, i5, i6, i7, i8);
+  if(ret == NULL){
+    fprintf(stderr,"%s\n",SDL_GetError());
   }
-  KNH_RETURN(ctx, sfp, new_Glue(ctx, "sdl.Surface", surface, NULL));
+
+  KNH_RETURN(ctx, sfp, new_Glue(ctx, "sdl.Surface", ret, NULL));
 }
-  */
-// METHOD SDL_createRGBsurfacefrom(Ctx* ctx, knh_sfp_t *sfp)
 
+/* Surface SDL.createRGBsurfaceFrom(void[] pixels, int w, int h, int d, int pitch, int rmask, int gmask, int bmask, int amask) */
+//TODO
+METHOD SDL_createRGBsurfaceFrom(Ctx* ctx, knh_sfp_t *sfp)
+{
+  SDL_Surface* ret;
+  void* p1 = ((sfp[1].glue)->ptr);
+  int w = p_int(sfp[2]);
+  int h = p_int(sfp[3]);
+  int d = p_int(sfp[4]);
+  int pitch = p_int(sfp[5]);
+  int rmask = p_int(sfp[6]);
+  int gmask = p_int(sfp[7]);
+  int bmask = p_int(sfp[8]);
+  int amask = p_int(sfp[9]);
+  ret = SDL_CreateRGBSurfaceFrom(p1, w, h, d, pitch, rmask, gmask, bmask, amask);
+  if(ret == NULL){
+    fprintf(stderr,"%s\n",SDL_GetError());
+  }
+  KNH_RETURN(ctx, sfp, new_Glue(ctx, "sdl.Surface", ret, NULL));
+}
  
-   /* void Surface.freeSurface(self) */
-
+/* void Surface.freeSurface(self) */
+//TODO
 METHOD Surface_freeSurface(Ctx* ctx,knh_sfp_t *sfp)
 {
   SDL_Surface* self = ((sfp[0].glue)->ptr);
   SDL_FreeSurface(self);
+
   KNH_RETURN_void(ctx,sfp);
 }
 
@@ -348,8 +378,8 @@ METHOD Surface_saveBMP(Ctx* ctx, knh_sfp_t *sfp)
 
 
 /* void Surface.setColorKey(self, int flag, int key) */
-/*
-METHOD SDL_setColorKey(Ctx* ctx, knh_sfp_t *sfp)
+
+METHOD Surface_setColorKey(Ctx* ctx, knh_sfp_t *sfp)
 {
   SDL_Surface* self = ((sfp[0].glue)->ptr);
   int i1 = p_int(sfp[1]);
@@ -360,7 +390,7 @@ METHOD SDL_setColorKey(Ctx* ctx, knh_sfp_t *sfp)
 
   KNH_RETURN_void(ctx,sfp);
 }
-*/
+
 
  /* void Surface.setAlpha(self, int flag, int alpha) */
 
@@ -372,6 +402,7 @@ METHOD Surface_setAlpha(Ctx* ctx,knh_sfp_t *sfp)
   if(SDL_SetAlpha(self, i1, i2)==-1){
     fprintf(stderr,"%s\n",SDL_GetError());
   }
+
   KNH_RETURN_void(ctx,sfp);
 }
 
@@ -413,6 +444,7 @@ METHOD Surface_blitSurface(Ctx* ctx,knh_sfp_t *sfp)
 
   KNH_RETURN_void(ctx,sfp);
 }
+
 /*
 METHOD Surface_fillRect(Ctx* ctx, knh_sfp_t *sfp)
 {
@@ -427,28 +459,30 @@ METHOD Surface_fillRect(Ctx* ctx, knh_sfp_t *sfp)
 }
 */
 
- /* void Surface.displayFormat(self) 
- // TODO
+ /* void Surface.displayFormat(self) */
+
 METHOD Surface_displayFormat(Ctx* ctx, knh_sfp_t *sfp)
 {
   SDL_Surface *self = ((sfp[0].glue)->ptr);
-  SDL_Surface *ret = SDL_DisplayFormat(self);
-  if(ret == NULL){
+  if((SDL_DisplayFormat(self)) == NULL ){
     fprintf(stderr,"%s\n",SDL_GetError());
   }
+
   KNH_RETURN_void(ctx,sfp);
 }
- */
-/*
-METHOD SDL_displayFormatalpha(Ctx* ctx, knh_sfp_t *sfp)
+
+/* Surface Surface.displayFormatAlpha(self) */
+
+METHOD Surface_displayFormatAlpha(Ctx* ctx, knh_sfp_t *sfp)
 {
-  SDL_Surface *surface = SDL_DisplayFormatAlpha((sfp[1].glue)->ptr);
-  if(surface == NULL){
+  SDL_Surface *self = SDL_DisplayFormatAlpha((sfp[0].glue)->ptr);
+  if(self == NULL){
     fprintf(stderr,"%s\n",SDL_GetError());
   }
-  KNH_RETURN(ctx,sfp,new_Glue(ctx,"sdl.Surface",surface,NULL));
+
+  KNH_RETURN(ctx,sfp, new_Glue(ctx,"sdl.Surface",self,NULL));
 }
-*/
+
 
  /* void SDL.warpMouse(int x, int y) */
 
@@ -461,6 +495,7 @@ METHOD SDL_warpMouse(Ctx* ctx, knh_sfp_t *sfp)
   KNH_RETURN_void(ctx,sfp);
 }
 
+/* Cursor SDL.createCursor(int w, int h, int hot_x, int hot_y) */
 /*
 METHOD SDL_createCursor(Ctx* ctx, knh_sfp_t *sfp)
 {
@@ -468,11 +503,9 @@ METHOD SDL_createCursor(Ctx* ctx, knh_sfp_t *sfp)
  int i2 = p_int(sfp[2]);
  int i3 = p_int(sfp[3]);
  int i4 = p_int(sfp[4]);
+ SDL_Cursor* ret = SDL_CreateCursor(i1, i2, i3, i4);
 
-
- SDL_Cursor* ret = SDL_CreateCursor( , , i1, i2, i3, i4);
-
- KNH_RETURN(ctx,sfp,ret);
+ KNH_RETURN(ctx,sfp, new_Glue(ctx,"sdl.Cursor", ret, NULL));
 }
 */
  /*
@@ -484,16 +517,17 @@ METHOD SDL_freeCursor(Ctx* ctx, knh_sfp_t *sfp)
  */
 // METHOD SDL_setCursor(Ctx* ctx, knh_sfp_t *sfp)
   
-  /* Cursor SDL.getCursor(void) */
-  /*METHOD SDL_getCursor(Ctx* ctx, knh_sfp_t *sfp)
+
+/* Cursor SDL.getCursor(void) */
+
+METHOD SDL_getCursor(Ctx* ctx, knh_sfp_t *sfp)
 {
   SDL_Cursor* ret = SDL_GetCursor();
 
-  KNH_RETURN(ctx,sfp,ret);
-  }*/
+  KNH_RETURN(ctx,sfp, new_Glue(ctx,"sdl.Cursor", ret, NULL));
+}
   
-
-   /* int SDL.showCursor(int toggle) */   
+/* int SDL.showCursor(int toggle) */   
 
 METHOD SDL_showCursor(Ctx* ctx, knh_sfp_t *sfp)
 {
