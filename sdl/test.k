@@ -10,6 +10,7 @@ VideoInfo info = SDL.getVideoInfo()
 
 Cursor c = SDL.getCursor()
 
+Cursor new = SDL.createCursor(0,1,32,32,32,32)
 name
 info
 c

@@ -84,7 +84,7 @@ Surface Surface.displayFormatAlpha();
 
 void SDL.warpMouse(int x,int y);
 
-//Cursor SDL.createCursor(int w, int h, int hot_x, int hot_y);
+//Cursor SDL.createCursor(int[] data, int[] mask, int w, int h, int hot_x, int hot_y);
 //void SDL.freeCursor(Cursor c);
 //void* SDL.setCursor(Cursor c);
 

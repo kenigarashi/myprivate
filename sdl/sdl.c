@@ -496,18 +496,21 @@ METHOD SDL_warpMouse(Ctx* ctx, knh_sfp_t *sfp)
 }
 
 /* Cursor SDL.createCursor(int w, int h, int hot_x, int hot_y) */
-/*
+
 METHOD SDL_createCursor(Ctx* ctx, knh_sfp_t *sfp)
 {
- int i1 = p_int(sfp[1]);
- int i2 = p_int(sfp[2]);
- int i3 = p_int(sfp[3]);
- int i4 = p_int(sfp[4]);
- SDL_Cursor* ret = SDL_CreateCursor(i1, i2, i3, i4);
+  SDL_Cursor* ret;
+  int* i1 = ((sfp[1].glue)->ptr);
+  int* i2 = ((sfp[2].glue)->ptr);
+  int i3 = p_int(sfp[3]);
+  int i4 = p_int(sfp[4]);
+  int i5 = p_int(sfp[5]);
+  int i6 = p_int(sfp[6]);
+  ret = SDL_CreateCursor(i1, i2, i3, i4, i5, i6);
 
- KNH_RETURN(ctx,sfp, new_Glue(ctx,"sdl.Cursor", ret, NULL));
+  KNH_RETURN(ctx,sfp, new_Glue(ctx,"sdl.Cursor", ret, NULL));
 }
-*/
+
  /*
 METHOD SDL_freeCursor(Ctx* ctx, knh_sfp_t *sfp)
 {

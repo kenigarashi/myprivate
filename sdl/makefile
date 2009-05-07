@@ -24,3 +24,8 @@ $(library): $(objs)
 clean:
 	$(RM) -rf $(objs) $(library)
 
+.PHONY: install
+install: $(library)
+	mkdir -p .konoha/sdl
+	cp $(library) .konoha/sdl
+	cp sdl.k .konoha/sdl
