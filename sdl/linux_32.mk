@@ -1,18 +1,20 @@
-#Makefile for math.so
+#Makefile for sdl.so
 
 CC = gcc
 CFLAGS = -O2 -Wall -fmessage-length=0 -fpic
 LDLIBS = -lSDL -lkonoha
 
-library = sdl_linux_32.so
-#library = math.dylib
+target = linux_32
+pkgname = sdl
+
+library = "$(pkgname)_$(target).so"
 
 .PHONY: all
 all: $(library)
 
-objs = sdl.o
+objs = $(pkgname).o
 
-sdl.o: sdl.c
+"$(pkgname).o": $(pkgname).c
 	$(CC) $(CFLAGS) -o $@ -c $^
 
 $(library): $(objs)
@@ -22,8 +24,3 @@ $(library): $(objs)
 clean:
 	$(RM) -rf $(objs) $(library)
 
-.PHONY: konoha_install
-konoha_install: $(library)
-	mkdir -p .konoha/sdl
-	cp $(library) .konoha/sdl
-	cp sdl.k .konoha/sdl
