@@ -1,7 +1,5 @@
 using sdl.*
 
-int color
-
 SDL.init(SDL.SDL_INIT_VIDEO)
 
 Surface test = SDL.createRGBSurface(SDL.SDL_SWSURFACE,256,256,256,0,0,0,0)
@@ -28,16 +26,16 @@ Cursor c = SDL.getCursor()
 
 String title = SDL.wmSetCaption("hello")
 
+SDL.pumpEvents()
+
 title.wmGetCaption(title)
 
 SDL.wmGrabInput(SDL.SDL_QUERY)
 
-SDL.wmIconifyWindow()
+//SDL.wmIconifyWindow()
 
+Surface new = s.displayFormatAlpha()
 
-
-chk
 name
 info
 c
-color

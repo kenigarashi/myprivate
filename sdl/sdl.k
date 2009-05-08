@@ -64,7 +64,6 @@ void Surface.unLockSurface();
 Surface SDL.loadBMP(String file);
 void Surface.saveBMP(String file);
 void Surface.setColorKey(int flag);
-//chk
 void Surface.setAlpha(int flag, int alpha);
 
 //void SDL.setClipRect(Surface screen, Rect rect);
@@ -75,17 +74,14 @@ void Surface.blitSurface(Surface screen);
 
 //void Surface.fillRect(Rect dstrect, int color);
 
-//check
-void Surface.displayFormat();
+Surface Surface.displayFormat();
 Surface Surface.displayFormatAlpha();
-
 void SDL.warpMouse(int x,int y);
 
 //todo
 //Cursor SDL.createCursor(int data, int mask, int width, int height, int hot_x, int hot_y);
-
-//void SDL.freeCursor(Cursor cursor);
-//void* SDL.setCursor(Cursor cursor);
+//void Cursor.freeCursor();
+//void Cursor.setCursor();
 
 Cursor SDL.getCursor();
 
@@ -109,29 +105,36 @@ void String.wmGetCaption(String title);
 void SDL.wmSetIcon(Surface icon, int mask);
 int SDL.wmIconifyWindow();
 int SDL.wmGrabInput(int grabmode);
+
 //todo
 void Surface.wmToggleFullScreen();
 
 
-//   	Event
-//void SDL.pumpEvents();
+//   	Event //check
+void SDL.pumpEvents();
+
 //void SDL.peepEvents(Event evt, int num, int action, int mask);
 //void SDL.pollEvent(Event evt);
 //void SDL.waitEvent(Event evt);
 //void SDL.pushEvent(Event evt);
-// void SDL.setEventfilter(EventFilter filter);
-// EventFilter SDL.getEventfilter();
-//int SDL.eventState(int type, int state);
+//void SDL.setEventfilter(EventFilter filter);
+//EventFilter SDL.getEventfilter();
+
+int SDL.eventState(int type, int state);
+
 //int* SDL.getKeyState(int* numkeys);
-//int SDL.getModstate();
-//void SDL.setModstate(int modstate);
-//void SDL.getKeyname(int key);
-//void SDL.enableUNICODE(int enable);
-//void SDL.enableKeyrepeat(int delay, int interval);
+
+int SDL.getModState();
+void SDL.setModState(int modstate);
+String SDL.getKeyName(int key);
+int SDL.enableUNICODE(int enable);
+void SDL.enableKeyRepeat(int delay, int interval);
+
 //int SDL.getMousestate(int[] x, int[] y);
 //int SDL.getRelativemousestate(int[] x, int[] y);
-//int SDL.getAppstate();
-//int SDL.joystickEventstate(int state);
+
+int SDL.getAppState();
+int SDL.joystickEventstate(int state);
 
 //   	Joystick
 //int SDL.numJoysticks();

@@ -581,22 +581,24 @@ METHOD SDL_createCursor(Ctx* ctx, knh_sfp_t *sfp)
   KNH_RETURN(ctx,sfp, new_Glue(ctx,"sdl.Cursor", ret, NULL));
 }
 
-/* void SDL.freeCursor(Cursor cursor) */
- /*
-METHOD SDL_freeCursor(Ctx* ctx, knh_sfp_t *sfp)
+/* void Cursor.freeCursor(self) */
+
+METHOD Cursor_freeCursor(Ctx* ctx, knh_sfp_t *sfp)
 {
-  SDL_Cursor* cursor = ((sfp[1].glue)->ptr);
-  SDL_FreeCursor(cursor);
+  SDL_Cursor* self = ((sfp[0].glue)->ptr);
+  SDL_FreeCursor(self);
 
   KNH_RETURN_void(ctx,sfp);
 }
- */
 
-/* void[] SDL.setCursor(Cursor cursor) */
-  /* METHOD SDL_setCursor(Ctx* ctx, knh_sfp_t *sfp)
+/* void Cursor.setCursor(self) */
+METHOD Cursor_setCursor(Ctx* ctx, knh_sfp_t *sfp)
  {  
+   SDL_Cursor* self = ((sfp[0].glue)->ptr);
+   SDL_SetCursor(self);
+
+   KNH_RETURN_void(ctx,sfp);
  }
-  */
 
 /* Cursor SDL.getCursor(void) */
 
@@ -816,13 +818,17 @@ METHOD SDL_wmGrabInput(Ctx* ctx, knh_sfp_t *sfp)
 
 
 /* Event */
-   /*
+
+/* void SDL.pumpEvents(void) */
+
 METHOD SDL_pumpEvents(Ctx* ctx, knh_sfp_t *sfp)
 {
   SDL_PumpEvents();
+
   KNH_RETURN_void(ctx,sfp);
 }
 
+/*
 METHOD SDL_peepEvents(Ctx* ctx, knh_sfp_t *sfp)
 {
   if(SDL_PeepEvents((sfp[1].glue)->ptr, sfp[2].ivalue, sfp[3].ivalue, sfp[4].ivalue)==-1){
@@ -859,13 +865,18 @@ METHOD SDL_pushEvent(Ctx* ctx, knh_sfp_t *sfp)
 
 // METHOD SDL_setEventfilter(Ctx* ctx, knh_sfp_t *sfp)
 // METHOD SDL_getEventfilter(Ctx* ctx, knh_sfp_t *sfp)
+*/
+
+/* int SDL.eventState(int type, int state) */
 
 METHOD SDL_eventState(Ctx* ctx, knh_sfp_t *sfp)
 {
-  int state = SDL_EventState(sfp[1].ivalue, sfp[2].ivalue);
-  KNH_RETURN_Int(ctx,sfp,state);
+  Uint8 type = p_int(sfp[1]);
+  int state = p_int(sfp[2]);
+  int ret = SDL_EventState(type, state);
+  KNH_RETURN_Int(ctx,sfp,ret);
 }
-*/
+
  /*
 METHOD SDL_getKeyState(Ctx* ctx,knh_sfp_t *sfp)
 {
@@ -873,59 +884,83 @@ METHOD SDL_getKeyState(Ctx* ctx,knh_sfp_t *sfp)
   KNH_RETURN_void(ctx,sfp);
 }
  */
- /*
+
+/* int SDL.getModState(void) */
+
 METHOD SDL_getModstate(Ctx* ctx, knh_sfp_t *sfp)
 {
-  KNH_RETURN_Int(ctx,sfp,SDL_GetModState());
+  int ret = SDL_GetModState();
+
+  KNH_RETURN_Int(ctx,sfp,ret);
 }
+
+/* void SDL.setModState(int modstate) */
 
 METHOD SDL_setModstate(Ctx* ctx, knh_sfp_t *sfp)
 {
-  SDL_SetModState(sfp[1].ivalue);
+  int modstate = p_int(sfp[1]);
+  SDL_SetModState(modstate);
+
   KNH_RETURN_void(ctx,sfp);
 }
+
+/* String SDL.getKeyName(int key) */
 
 METHOD SDL_getKeyname(Ctx* ctx, knh_sfp_t *sfp)
 {
-  printf("%s\n",SDL_GetKeyName(sfp[1].ivalue));
-  KNH_RETURN_void(ctx,sfp);
+  int key = p_int(sfp[1]);
+  char* ret = SDL_GetKeyName(key);
+
+  KNH_RETURN(ctx, sfp, new_String(ctx, B(ret), NULL));
 }
+
+
+/* int SDL.enableUNICODE(int enable) */
 
 METHOD SDL_enableUNICODE(Ctx* ctx, knh_sfp_t *sfp)
 {
-  SDL_EnableUNICODE(sfp[1].ivalue);
-  KNH_RETURN_void(ctx,sfp);
+  int enable = p_int(sfp[1]);
+  int ret = SDL_EnableUNICODE(enable);
+
+  KNH_RETURN_Int(ctx,sfp,ret);
 }
 
-METHOD SDL_enableKeyrepeat(Ctx* ctx, knh_sfp_t *sfp)
+/* void SDL.enableKeyRepeat(int delay, int interval) */
+
+METHOD SDL_enableKeyRepeat(Ctx* ctx, knh_sfp_t *sfp)
 {
-  if(SDL_EnableKeyRepeat(sfp[1].ivalue,sfp[2].ivalue)==-1){
+  int delay = p_int(sfp[1]);
+  int interval = p_int(sfp[2]);
+  if(SDL_EnableKeyRepeat(delay, interval)==-1){
     fprintf(stderr,"%s\n",SDL_GetError());
   }
-  KNH_RETURN_void(ctx,sfp);
-}
- */
-//METHOD SDL_getMousestate(Ctx* ctx, knh_sfp_t *sfp)
-//METHOD SDL_getRelativemousestate(Ctx* ctx, knh_sfp_t *sfp)
-/*
-METHOD SDL_getAppstate(Ctx* ctx, knh_sfp_t *sfp)
-{
-  KNH_RETURN_Int(ctx,sfp,SDL_GetAppState());
-}
-*/
- /*
-METHOD SDL_joystickEventstate(Ctx* ctx, knh_sfp_t *sfp)
-{
-  int state = SDL_JoystickEventState(sfp[1].ivalue);
-  if(state == SDL_QUERY){
-    printf("keep state\n");
-  } else {
-    printf("change state\n");
-  }
+
   KNH_RETURN_void(ctx,sfp);
 }
 
-*/
+//METHOD SDL_getMousestate(Ctx* ctx, knh_sfp_t *sfp)
+//METHOD SDL_getRelativemousestate(Ctx* ctx, knh_sfp_t *sfp)
+
+/* int SDL.getAppState(void) */
+
+METHOD SDL_getAppstate(Ctx* ctx, knh_sfp_t *sfp)
+{
+  int ret = SDL_GetAppState();
+
+  KNH_RETURN_Int(ctx,sfp,ret);
+}
+
+/* int SDL.joystickEventState(int state) */
+
+METHOD SDL_joystickEventstate(Ctx* ctx, knh_sfp_t *sfp)
+{
+  int state = p_int(sfp[1]);
+  int ret = SDL_JoystickEventState(state);
+
+  KNH_RETURN_Int(ctx,sfp,ret);
+}
+
+
 /* Joystick */
   /*
 METHOD SDL_numJoysticks(Ctx* ctx, knh_sfp_t *sfp)
@@ -1147,8 +1182,6 @@ METHOD SDL_getTicks(Ctx* ctx, knh_sfp_t *sfp)
   
    KNH_RETURN_Float(ctx,sfp,SDL_GetTicks());
 }
-
-
 
 
 /*
