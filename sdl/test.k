@@ -16,23 +16,9 @@ Surface s = SDL.setVideoMode(444,444,32,SDL.SDL_SWSURFACE)
 
 Surface bmp = SDL.loadBMP("sail.bmp")
 
-int chk=0
-for(chk;chk<256;chk++){
-
-bmp.setAlpha(SDL.SDL_SRCALPHA,chk)
-
 bmp.blitSurface(s)
 
 s.flip()
-
-SDL.delay(100)
-
-}
-bmp.blitSurface(s)
-
-s.flip()
-
-SDL.delay(2000)
 
 i.setColorKey(SDL.SDL_SRCCOLORKEY)
 
@@ -48,6 +34,9 @@ SDL.wmGrabInput(SDL.SDL_QUERY)
 
 SDL.wmIconifyWindow()
 
+
+
+chk
 name
 info
 c

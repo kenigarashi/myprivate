@@ -33,7 +33,7 @@ Surface SDL.getVideoSurface();
 VideoInfo SDL.getVideoInfo();
 String SDL.videoDriverName(String namebuf, int maxlen);
 // TODO
-void SDL.listModes(PixelFormat fmt, int flags);
+//void SDL.listModes(PixelFormat fmt, int flags);
 
 void SDL.videoModeOK(int width, int height, int bpp, int flags);
 Surface SDL.setVideoMode(int width, int height, int bpp, int flags);
@@ -46,13 +46,13 @@ void Surface.flip();
 //void SDL.setPalette(Surface screen, int flags, Color color, int firstcolor, int ncolors);
 
 //void SDL.setGamma(float redgamma, float greengamma, float bluegamma);	
-//void SDL.getGammaramp(int* redtable, int* greentable, int* bluetable);
-//void SDL.setGammaramp(int* redtable, int* greentable, int* bluetable);
+//void SDL.getGammaRamp(int redtable, int greentable, int bluetable);
+//void SDL.setGammaRamp(int redtable, int greentable, int bluetable);
 
-int Surface.mapRGB(int r, int g, int b);
-//int SDL.mapRGBA(PixelFormat fmt, int r, int g, int b, int a);
-//void SDL.getRGB(int pixel, PixelFormat fmt, int r, int g, int b);
-//void SDL.getRGBA(int pixel, PixelFormat fmt, int r, int g, int b, int a);
+int Surface.mapRGB(int red, int green, int blue);
+//int SDL.mapRGBA(PixelFormat fmt, int red, int green, int blue, int alpha);
+//void SDL.getRGB(int pixel, PixelFormat fmt, int red, int green, int blue);
+//void SDL.getRGBA(int pixel, PixelFormat fmt, int red, int green, int blue, int alpha);
 
 Surface SDL.createRGBSurface(int flags, int width, int height, int depth, int rmask, int gmask, int bmask, int amask);
 //todo
@@ -67,9 +67,9 @@ void Surface.setColorKey(int flag);
 //chk
 void Surface.setAlpha(int flag, int alpha);
 
-//void SDL.setCliprect(Surface surface, Rect rect);
-//void SDL.getCliprect(Surface surface, Rect rect);
-//Surface SDL.converSurface(Surface screen, PixelFormat fmt, int flags);
+//void SDL.setClipRect(Surface screen, Rect rect);
+//void SDL.getClipRect(Surface screen, Rect rect);
+//Surface SDL.convertSurface(Surface screen, PixelFormat fmt, int flags);
 
 void Surface.blitSurface(Surface screen);
 
@@ -82,7 +82,7 @@ Surface Surface.displayFormatAlpha();
 void SDL.warpMouse(int x,int y);
 
 //todo
-Cursor SDL.createCursor(int data, int mask, int width, int height, int hot_x, int hot_y);
+//Cursor SDL.createCursor(int data, int mask, int width, int height, int hot_x, int hot_y);
 
 //void SDL.freeCursor(Cursor cursor);
 //void* SDL.setCursor(Cursor cursor);
@@ -90,14 +90,15 @@ Cursor SDL.createCursor(int data, int mask, int width, int height, int hot_x, in
 Cursor SDL.getCursor();
 
 int SDL.showCursor(int toggle);
-void SDL.glLoadLibrary(String path);
 
-// void* SDL.glGetProcAddress(String proc);
-// void SDL.glGetAttribute(GLattr attr, int* value);
+//void SDL.glLoadLibrary(String path);
+//void[] SDL.glGetProcAddress(String proc);
+//void SDL.glGetAttribute(int attr);
 //void SDL.glSetAttribute(int attr, int value);
-//void SDL.glSwapbuffers();
+//void SDL.glSwapBuffers();
+
 //Overlay SDL.createYUVoverlay(int width, int height, int fmt, Surface display);
-//void SDL.lockYUVoverlay(Overlay o);
+//void SDL.lockYUVoverlay(Overlay ol);
 //void SDL.unlockYUVoverlay(Overlay ol);
 //void SDL.displayYUVoverlay(Overlay ol, Rect dstrect);
 //void SDL.freeYUVoverlay(Overlay ol);
