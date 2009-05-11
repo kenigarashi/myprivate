@@ -2,9 +2,30 @@ class SDL;
 class Surface;
 class VideoInfo;
 class Event;
-class Rect;
+
+class Rect
+{
+	int x;
+	int y;
+	int w;
+	int h;
+	Rect(int x, int y, int w, int h){
+		 _x = x; _y = y; _w = w; _h = h;
+	}
+};
+
+
 class PixelFormat;
-class Color;
+class Color
+{
+	int r;
+	int g;
+	int b;
+	Color(int r, int g, int b){
+		  _r = r; _g = g; _b = b;
+	}
+};
+
 class Cursor;
 class Overlay;
 class Eventaction;
@@ -17,6 +38,10 @@ class CD;
 
 void SDL.sample()
 
+
+//  for Test
+void SDL.testColor(Color c);
+void SDL.testRect(Rect r);
 
 
 //	General
@@ -70,7 +95,7 @@ void Surface.setAlpha(int flag, int alpha);
 //void SDL.getClipRect(Surface screen, Rect rect);
 //Surface SDL.convertSurface(Surface screen, PixelFormat fmt, int flags);
 
-void Surface.blitSurface(Surface screen);
+void Surface.blitSurface(Rect srcrect, Surface screen, Rect dstrect);
 
 //void Surface.fillRect(Rect dstrect, int color);
 

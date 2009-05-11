@@ -3,11 +3,29 @@
 #include <SDL.h>
 #else
 #include<SDL/SDL.h>
+#include"color.h"
 //#include<SDL/SDL_opengl.h>
 #endif
 //#include<SDL/SDL_image.h>
 
 /* General */
+
+
+METHOD SDL_testColor(Ctx* ctx, knh_sfp_t* sfp)
+{
+  knh_Glue_t *g = sfp[1].glue;
+  knh_sdl_color_t *c = (knh_sdl_color_t*)(g->ptr);
+  printf("%lld %lld %lld\n", c->r, c->g, c->b);
+
+}
+
+
+METHOD SDL_testRect(Ctx* ctx, knh_sfp_t* sfp)
+{
+  knh_Glue_t *g = sfp[1].glue;
+  knh_sdl_rect_t *r = (knh_sdl_rect_t*)(g->ptr);
+  printf("%lld %lld %lld %lld\n", r->x, r->y, r->w, r->h);
+}
 
 /* void SDL.init(int flags) */
 
@@ -506,8 +524,20 @@ METHOD Surface_blitSurface(Ctx* ctx,knh_sfp_t *sfp)
 {
 
   SDL_Surface *self = (SDL_Surface*)((sfp[0].glue)->ptr);
-  SDL_Surface *screen = (SDL_Surface*)((sfp[1].glue)->ptr);
-  if(SDL_BlitSurface(self, NULL, screen, NULL) != 0){
+  knh_sdl_rect_t* rect1 = (knh_sdl_rect_t*)((sfp[1].glue)->ptr);
+  SDL_Surface *screen = (SDL_Surface*)((sfp[2].glue)->ptr);
+  knh_sdl_rect_t* rect2 = (knh_sdl_rect_t*)((sfp[3].glue)->ptr);
+  SDL_Rect srcrect;
+  SDL_Rect dstrect;
+  srcrect.x = (Sint16)rect1->x;
+  srcrect.y = (Sint16)rect1->y;
+  srcrect.w = (Uint16)rect1->w;
+  srcrect.h = (Uint16)rect1->h;
+  dstrect.x = (Sint16)rect2->x;
+  dstrect.y = (Sint16)rect2->y;
+  dstrect.w = (Uint16)rect2->w;
+  dstrect.h = (Uint16)rect2->h;
+  if(SDL_BlitSurface(self, &srcrect, screen, &dstrect) != 0){
     fprintf(stderr,"%s\n",SDL_GetError());
   }
 
