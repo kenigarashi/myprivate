@@ -3,6 +3,78 @@ class Surface;
 class VideoInfo;
 class Event;
 
+class Active
+{
+	int type;
+	int gain;
+	int state;
+	Active(int type, int gain, int state){
+		   _type = type; _gain = gain; _state = state;
+	}
+};
+
+class MouseMotion
+{
+	int type;
+	int state;
+	int x;
+	int y;
+	int xrel;
+	int yrel;
+	MouseMotion(int type, int state, int x, int y, int xrel, int yrel){
+			_type = type; _state = state; _x = x; _y = y; _xrel = xrel; _yrel = yrel;
+	}
+};
+
+class MouseButton
+{
+	int type;
+	int button;
+	int state;
+	int x;
+	int y;
+	MouseButton(int type, int button, int state, int x, int y){
+			_type = type; _button = button; _state = state; _x = x; _y = y;
+	}
+};
+
+class Resize
+{
+	int type;
+	int w;
+	int h;
+	Resize(int type, int w, int h){
+		   _type = type; _w = w; _h = h;
+	}
+};
+
+class Expose
+{
+	int type;
+	Expose(int type){
+		   _type = type;
+	}
+};
+
+class Quit
+{
+	int type;
+	Quit(int type){
+		 _type = type;
+	}
+};
+
+class KeySym
+{
+	int scancode;
+	int sym;
+	int mode;
+	int unicode;
+	KeySym(int scancode, int sym, int mode, int unicode){
+		   _scancode = scancode; _sym = sym; _mode = mode; _unicode = unicode;
+	}
+};
+
 class Rect
 {
 	int x;
