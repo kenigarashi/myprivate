@@ -21,6 +21,7 @@ module_init(test_init);
 
 static __exit void test_exit(void){
   unregister_kprobe(&kp);
+  printk(KERN_ALERT "Good bye kernel world\n");
 }
 
 module_exit(test_exit);
