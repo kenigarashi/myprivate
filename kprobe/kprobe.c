@@ -4,10 +4,10 @@
 
 METHOD Kernel_insmod(Ctx* ctx, knh_sfp_t* sfp)
 {
-  char *cmd = alloca(sizeof(char*));
   char *str = "insmod";
   char *filename = p_char(sfp[1]);
   int len = strlen(str)+strlen(filename)+2;
+  char *cmd = (char*)alloca(len);
   snprintf(cmd, len, "%s %s", str, filename);
   system(cmd);
 
@@ -18,10 +18,10 @@ METHOD Kernel_insmod(Ctx* ctx, knh_sfp_t* sfp)
 
 METHOD Kernel_rmmod(Ctx* ctx, knh_sfp_t* sfp)
 {
-  char *cmd = alloca(sizeof(char*));
   char *str = "rmmod";
   char *modname = p_char(sfp[1]);
   int len = strlen(str)+strlen(modname)+2;
+  char *cmd = (char*)alloca(len);
   snprintf(cmd, len, "%s %s", str, modname);
   system(cmd);
 
