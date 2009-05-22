@@ -5,7 +5,7 @@ CFLAGS = -O2 -Wall -fmessage-length=0 -fpic
 LDLIBS = -lkonoha
 
 target = linux_32
-pkgname = mod
+pkgname = kprobe
 
 library = "$(pkgname)_$(target).so"
 
@@ -26,6 +26,6 @@ clean:
 
 .PHONY: install
 install: $(library)
-	mkdir -p .konoha/mod
-	cp $(library) .konoha/mod
-	cp mod.k .konoha/mod
+	mkdir -p .konoha/kprobe
+	cp $(library) .konoha/kprobe
+	cp kprobe.k .konoha/kprobe
