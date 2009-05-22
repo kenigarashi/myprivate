@@ -22,7 +22,7 @@ $(library): $(objs)
 
 .PHONY: clean
 clean:
-	$(RM) -rf $(objs) $(library)
+	$(RM) -rf $(objs) $(library) .konoha
 
 .PHONY: install
 install: $(library)
