@@ -12,9 +12,21 @@ library = "$(pkgname)_$(target).so"
 .PHONY: all
 all: $(library)
 
-objs = $(pkgname).o
+objs = $(pkgname).o sdl_event.o sdl_keyboard.o sdl_color.o sdl_mouse.o
 
 "$(pkgname).o": $(pkgname).c
+	$(CC) $(CFLAGS) -o $@ -c $^
+
+sdl_event.o: sdl_event.c
+	$(CC) $(CFLAGS) -o $@ -c $^
+
+sdl_keyboard.o: sdl_keyboard.c
+	$(CC) $(CFLAGS) -o $@ -c $^
+
+sdl_color.o: sdl_color.c
+	$(CC) $(CFLAGS) -o $@ -c $^
+
+sdl_mouse.o: sdl_mouse.c
 	$(CC) $(CFLAGS) -o $@ -c $^
 
 $(library): $(objs)
@@ -22,5 +34,10 @@ $(library): $(objs)
 
 .PHONY: clean
 clean:
-	$(RM) -rf $(objs) $(library)
+	$(RM) -rf $(objs) $(library) *~ .konoha
 
+.PHONY: install
+install: $(library)
+	mkdir -p .konoha/sdl
+	cp $(library) .konoha/sdl
+	cp sdl.k .konoha/sdl

@@ -1,6 +1,6 @@
 using sdl.*
-SDL.init(SDL.SDL_INIT_VIDEO)
-Surface s = SDL.setVideoMode(612,612,32,SDL.SDL_SWSURFACE)
+SDL.init(SDL.INIT_VIDEO)
+Surface s = SDL.setVideoMode(612,612,32,SDL.SWSURFACE)
 Rect r1 = new Rect(0,0,400,400)
 Rect r2 = new Rect(80,150,0,0)
 Surface bmp = SDL.loadBMP("sample.bmp")
@@ -11,4 +11,3 @@ for(i;i<612;i++){
 	SDL.delay(5)
 }
 SDL.quit()
-

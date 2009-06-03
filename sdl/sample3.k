@@ -12,7 +12,7 @@ SDL.testRect(r1)
 
 SDL.testRect(r2)
 
-Surface s = SDL.setVideoMode(500,500,32,SDL.SDL_SWSURFACE)
+Surface s = SDL.setVideoMode(500,500,32,SDL.SWSURFACE)
 
 Surface bmp = SDL.loadBMP("sample.bmp")
 
