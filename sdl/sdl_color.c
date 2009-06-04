@@ -1,6 +1,7 @@
 #include<konoha.h>
 #include<SDL/SDL.h>
 
+/* void Color.setColors(Surface screen, int firstcolor, int ncolors) */
 METHOD Color_setColors(Ctx* ctx, knh_sfp_t *sfp)
 {
   SDL_Color *c = ((sfp[0].glue)->ptr);
@@ -14,14 +15,19 @@ METHOD Color_setColors(Ctx* ctx, knh_sfp_t *sfp)
   KNH_RETURN_void(ctx, sfp);
 }
 
-/* void SDL.setPalette(Surface screen, int flags, Color color, int firstcolor, int ncolors) */
- /*
-METHOD SDL_setPalette(Ctx* ctx,knh_sfp_t *sfp)
+/* void Color.setPalette(Surface screen, int flags, int firstcolor, int ncolors) */
+METHOD Color_setPalette(Ctx* ctx,knh_sfp_t *sfp)
 {
-  if(SDL_SetPalette((sfp[1].glue)->ptr,sfp[2].ivalue,(sfp[3].glue)->ptr,sfp[4].ivalue,sfp[5].ivalue)==0){
+  SDL_Color *self = ((sfp[0].glue)->ptr);
+  SDL_Surface *screen = ((sfp[1].glue)->ptr);
+  int flags = p_int(sfp[2]);
+  int firstcolor = p_int(sfp[3]);
+  int ncolors = p_int(sfp[4]);
+  if(SDL_SetPalette(screen, flags, self, firstcolor, ncolors) == 0){
     fprintf(stderr,"%s\n",SDL_GetError());
   }
+
   KNH_RETURN_void(ctx,sfp);
 }
- */
+ 
 

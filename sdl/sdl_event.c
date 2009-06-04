@@ -39,8 +39,6 @@ METHOD Event_getKeyBoard(Ctx *ctx, knh_sfp_t *sfp)
 {
   knh_Glue_t *glue = sfp[0].glue;
   SDL_Event *event = (SDL_Event *)(glue->ptr);
-  //  knh_sdl_keyboard_t *keyboard = malloc(sizeof(knh_sdl_keyboard_t));
-  //  new_keyboard_from_sdl(&(event->key), keyboard);
   
   KNH_RETURN(ctx, sfp, new_Glue(ctx, "sdl.KeyBoard", &event->key, NULL));
 }
