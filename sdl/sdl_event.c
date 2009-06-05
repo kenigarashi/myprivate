@@ -88,9 +88,7 @@ METHOD Event_peepEvents(Ctx* ctx, knh_sfp_t *sfp)
 METHOD Event_pollEvent(Ctx* ctx,knh_sfp_t *sfp)
 {
   SDL_Event *event = ((sfp[1].glue)->ptr);
-  if(SDL_PollEvent(event)==0){
-    printf("Nothing Event\n");
-  }
+  SDL_PollEvent(event);
 
   KNH_RETURN_void(ctx, sfp);
 }
@@ -99,7 +97,7 @@ METHOD Event_pollEvent(Ctx* ctx,knh_sfp_t *sfp)
 METHOD Event_waitEvent(Ctx* ctx, knh_sfp_t *sfp)
 {
   int ret;
-  SDL_Event *event = ((sfp[1].glue)->ptr);
+  SDL_Event *event = (SDL_Event *)((sfp[1].glue)->ptr);
   if((ret = SDL_WaitEvent(event)) == 0){
     fprintf(stderr,"error:%s\n",SDL_GetError());
   }
@@ -131,13 +129,13 @@ METHOD Event_eventState(Ctx* ctx, knh_sfp_t *sfp)
   KNH_RETURN_Int(ctx,sfp,ret);
 }
 
-/* 
-METHOD Event_getKeyState(Ctx* ctx,knh_sfp_t *sfp)
+/* int[] Event.getKeyState(int[] numkeys) */
+/*METHOD Event_getKeyState(Ctx* ctx,knh_sfp_t *sfp)
 {
-  int* key = SDL_GetKeyState((sfp[1].glue)->ptr);
+  int *key = (int*)((sfp[1].glue)->ptr);
+  int *ret = SDL_GetKeyState(key);
   KNH_RETURN_void(ctx,sfp);
-}
- */
+  }*/
 
 /* int Event.getModState(void) */
 METHOD Event_getModstate(Ctx* ctx, knh_sfp_t *sfp)
@@ -180,7 +178,7 @@ METHOD Event_enableKeyRepeat(Ctx* ctx, knh_sfp_t *sfp)
 {
   int delay = p_int(sfp[1]);
   int interval = p_int(sfp[2]);
-  if(SDL_EnableKeyRepeat(delay, interval)==-1){
+  if(SDL_EnableKeyRepeat(delay, interval) == -1){
     fprintf(stderr,"%s\n",SDL_GetError());
   }
 

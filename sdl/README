@@ -1,5 +1,18 @@
-start
-second
-test
-class cleate
-event class (portion) 
+make informaiton
+
+Windows
+=======
+	$ copy \path\to\konoha.lib .
+	$ nmake -f windows.mk
+
+Apple MacOSX
+============
+
+	$ make -f macosx_32.mk
+
+ubuntu
+======
+
+	$ make -f linux_32.mk
+
+

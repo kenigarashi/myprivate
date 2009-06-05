@@ -69,7 +69,7 @@ void Surface.freeSurface();
 void Surface.lockSurface();
 void Surface.unLockSurface();
 void Surface.saveBMP(String file);
-void Surface.setColorKey(int flag);
+void Surface.setColorKey(int flag, int key);
 void Surface.setAlpha(int flag, int alpha);
 void Surface.blitSurface(Rect srcrect, Surface screen, Rect dstrect);
 void Surface.fillRect(Rect dstrect, int color);

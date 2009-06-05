@@ -393,7 +393,8 @@ METHOD Surface_setColorKey(Ctx* ctx, knh_sfp_t *sfp)
 {
   SDL_Surface* self = ((sfp[0].glue)->ptr);
   int flag = p_int(sfp[1]);
-  if(SDL_SetColorKey(self, flag, (*(Uint8*)self->pixels) ) == -1){
+  int key = p_int(sfp[2]);
+  if(SDL_SetColorKey(self, flag, key) == -1){
     fprintf(stderr,"%s\n",SDL_GetError());
   }
 
@@ -478,9 +479,14 @@ METHOD Surface_blitSurface(Ctx* ctx,knh_sfp_t *sfp)
 METHOD Surface_fillRect(Ctx* ctx, knh_sfp_t *sfp)
 {
   SDL_Surface* self = ((sfp[0].glue)->ptr);
-  SDL_Rect* rect = ((sfp[1].glue)->ptr);
+  knh_sdl_rect_t *srcrect = (knh_sdl_rect_t *)((sfp[1].glue)->ptr);
+  SDL_Rect rect;
+  rect.x = (Sint16)srcrect->x;
+  rect.y = (Sint16)srcrect->y;
+  rect.w = (Uint16)srcrect->w;
+  rect.h = (Uint16)srcrect->h;
   int color = p_int(sfp[2]);
-  if(SDL_FillRect(self, rect, color) == -1){
+  if(SDL_FillRect(self, &rect, color) == -1){
     fprintf(stderr,"error:%s\n",SDL_GetError());
   }
 

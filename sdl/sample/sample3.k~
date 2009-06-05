@@ -1,0 +1,10 @@
+using sdl.*
+
+SDL.init(SDL.INIT_EVERYTHING)
+Surface screen = SDL.setVideoMode(640, 640, 16, SDL.SWSURFACE)
+
+Rect r1 = new Rect(0,0,640,480)
+Color c = new Color(128,255,255)
+
+screen.fillRect(r1, c)
+screen.updateRect(0,0,0,0)
